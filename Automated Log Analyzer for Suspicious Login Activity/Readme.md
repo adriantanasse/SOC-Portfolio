@@ -74,14 +74,13 @@ python log_analyzer_adv.py
 
 ---
 
-## Example Output
+## Screenshots
 
-```
-[HIGH] User: alex | IP: 192.168.1.10 | Time: 23:50:33
-Risk Score: 7
-Reasons: Failed login, Login outside working hours
---------------------------------------------------
-```
+### Terminal Output
+![Terminal Output](images/terminal-output.png)
+
+### Alerts File
+![Alerts](images/alerts-output.png)
 
 ---
 
