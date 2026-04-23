@@ -1,4 +1,4 @@
-# 🔎 Advanced Security Log Analyzer by Adrian Tanase (Python)
+# 🔎 Advanced Security Log Analyzer – for Suspicious Activity (Python)
 
 ## Overview
 
@@ -43,8 +43,12 @@ Each log entry is evaluated using multiple security rules:
 ## Project Structure
 
 ```
-.
-├── log_analyzer_adv.py     # Main analysis script
+Automated Log Analyzer for Suspicious Login Activity/
+└── images/
+    ├── terminal-output.png
+    └── alerts-output.png
+    └── code-preview.png
+├── log_analyzer_adv.py # Main analysis script
 ├── login_logs.txt      # Sample log file
 ├── alerts.txt          # Output alerts
 └── README.md           # Project documentation
