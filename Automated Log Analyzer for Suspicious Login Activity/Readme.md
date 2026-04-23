@@ -1,6 +1,6 @@
-# 🔐 Security Log Analyzer (Python)
+# 🔐 Advanced Security Log Analyzer by Adrian Tanase (Python)
 
-## 📖 Overview
+## Overview
 
 This project simulates a real-world **Security Operations Center (SOC)** task: analyzing login logs to detect suspicious activity and potential security threats.
 
