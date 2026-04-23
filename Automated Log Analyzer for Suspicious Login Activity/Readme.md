@@ -1,4 +1,4 @@
-# 🔐 Advanced Security Log Analyzer by Adrian Tanase (Python)
+# 🔎 Advanced Security Log Analyzer by Adrian Tanase (Python)
 
 ## Overview
 
