@@ -1,8 +1,25 @@
-Built a Python-based log analyzer that detects:
+# Python Security Log Analyzer
 
-- Failed login attempts
-- Suspicious login times
-- Blacklisted IP addresses
-- Brute-force attack patterns
+## Overview
+This project simulates a real-world security task: analyzing login logs to detect suspicious activity.
 
-Uses file parsing, loops, conditionals, and automation logic.
+## Features
+- Detects failed login attempts
+- Identifies unusual login times (outside working hours)
+- Flags potential brute-force attacks
+- Writes alerts to a separate file
+
+## Technologies Used
+- Python
+- File handling
+- String parsing
+- Loops and conditionals
+
+## Files used
+- `log_analyzer.py` → main script
+- `login_logs.txt` → input logs
+- `alerts.txt` → detected alerts
+
+## How to Run
+```bash
+python log_analyzer.py
