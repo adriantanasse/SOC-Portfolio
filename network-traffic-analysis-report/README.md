@@ -95,23 +95,19 @@ Identified:
 
 ![Conversations](images/conversations.png)
 
-➡️ This is expected behavior in a home network.
+This is expected behavior in a home network.
 
 ---
 
-### 📡 Traffic Distribution
+### Traffic Distribution
 - Majority of traffic routed through gateway  
 - No suspicious direct external IP connections observed  
 
 ---
 
 ### HTTP Traffic Observed
-- Some unencrypted HTTP traffic detected  
-
-Risk:
-- Data transmitted in plaintext  
-- Potential exposure to interception (MITM attacks)
-
+- NO unencrypted HTTP traffic detected
+  Good sign!
 ---
 
 ### Suspicious Pattern Assessment
@@ -127,7 +123,7 @@ Risk:
 
 ## Network Flow Diagram
 
- 
+```text
 +-------------------+        +-------------------+        +----------------------+
 |   Local Device    |        |      Router       |        |   External Internet  |
 |  192.168.178.21   | -----> |  192.168.178.1    | -----> |  DNS / Web Servers   |
@@ -139,13 +135,13 @@ Risk:
         |                             |                              |
         | DNS Response                | Returns Response             |
         |<----------------------------|<-----------------------------|
-
-
-
-
+```
 ---
 
-## 📸 Screenshots
+## Screenshots
+
+### Traffic Analysis
+![Traffic Analysis](images/fukk-analysis.png)
 
 ### DNS Traffic Analysis
 ![DNS Analysis](images/dns-analysis.png)
@@ -158,27 +154,10 @@ Risk:
 
 ---
 
-## 📄 Full Report
+## Full Report
 Download the full analysis report:
 
 [Download PDF](network_analysis_report.pdf)
-
----
-
-## Key Takeaways
-- Demonstrates ability to analyze real network traffic  
-- Strong understanding of DNS and network behavior  
-- Applies SOC analyst thinking to identify anomalies  
-- Communicates findings in a professional format  
-
----
-
-## Why This Project Matters
-This project proves I can:
-- Work with real packet captures  
-- Use industry tools like Wireshark  
-- Identify potential threats  
-- Translate technical data into actionable insights  
 
 ---
 
