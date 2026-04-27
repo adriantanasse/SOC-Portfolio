@@ -1,17 +1,17 @@
 # SOC Incident Report: Suspected STRRAT Infection (PCAP Analysis/Investigation)
 ## Executive Summary
 
-On July 30, 2024, host 172.16.1.66 exhibited suspicious network behavior consistent with a STRRAT (Java-based Remote Access Trojan) infection.
+On **July 30, 2024**, host **172.16.1.66** exhibited suspicious network behavior consistent with a **STRRAT** (Java-based Remote Access Trojan) **infection**.
 
 The host initiated multiple outbound TLS connections over TCP 443, followed by:
 
-- High-frequency small packet transmissions (application data bursts)
-- Rapid TCP RST packets to multiple external IP addresses
-- No graceful TLS session termination (absence of FIN packets)
+- High-frequency **small packet transmissions** (application data bursts)
+- **Rapid TCP RST packets** to multiple external IP addresses
+- **No graceful TLS** session termination (absence of FIN packets)
 
-Shortly after, the host performed an unencrypted HTTP request to ip-api.com (port 80), a known technique used by malware to retrieve geolocation data.
+Shortly after, the host performed an unencrypted **HTTP request to ip-api.com** (port 80), a known technique used by malware to retrieve geolocation data.
 
-Further analysis of TCP streams revealed cleartext beaconing traffic containing the string STRRAT, confirming active command-and-control (C2) communication.
+Further analysis of TCP streams revealed **cleartext beaconing traffic containing the string STRRAT**, confirming active command-and-control (C2) communication.
 
 | Field            | Value                 |
 | ---------------- | --------------------- |
@@ -25,13 +25,14 @@ Further analysis of TCP streams revealed cleartext beaconing traffic containing 
 ## Technical Findings
 
 ## 1. Suspicious TLS Traffic Patterns
-- Multiple small TCP packets labeled "Application Data"
-- Packets transmitted within milliseconds of each other
-- Indicates beaconing behavior or staged communication
+- **Multiple small TCP packets** labeled "Application Data"
+- **Packets transmitted within milliseconds** of each other
+- Indicates **beaconing behavior** or staged communication
 
 
 ![TCP-connections](images/multiple-tcp-connections.png)
-Wireshark TLS traffic showing repeated small packets
+
+**Wireshark TLS traffic showing repeated small packets.**
 
 -----
 
