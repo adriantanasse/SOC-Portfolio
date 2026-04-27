@@ -33,10 +33,11 @@ Further analysis of TCP streams revealed cleartext beaconing traffic containing 
 ![TCP-connections](images/multiple-tcp-connections.png)
 Wireshark TLS traffic showing repeated small packets
 
+-----
+
 ![high-volume](images/high-volume.png)
 
-**The combination of a high packet count (455 packets) and significant data volume (~9 MB) within a short time window suggests automated communication rather than normal user browsing activity.
-**
+**The combination of a high packet count (455 packets) and significant data volume (~9 MB) within a short time window suggests automated communication rather than normal user browsing activity.**
 
 **Analysis:**
 - Indicates potential beaconing or staged data transfer
