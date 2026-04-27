@@ -1,4 +1,5 @@
-# Executive Summary
+# SOC Incident Report: Suspected STRRAT Infection (PCAP Analysis/Investigation)
+## Executive Summary
 
 On July 30, 2024, host 172.16.1.66 exhibited suspicious network behavior consistent with a STRRAT (Java-based Remote Access Trojan) infection.
 
@@ -21,7 +22,8 @@ Further analysis of TCP streams revealed cleartext beaconing traffic containing 
 | Operating System | Windows 11 Pro 64-bit |
 | Security         | Windows Defender      |
 
-# Technical Findings
+## Technical Findings
+
 ## 1. Suspicious TLS Traffic Patterns
 - Multiple small TCP packets labeled "Application Data"
 - Packets transmitted within milliseconds of each other
@@ -34,9 +36,11 @@ Wireshark TLS traffic showing repeated small packets
 ## 2. Rapid RST Burst to External IPs
 Multiple TCP RST, ACK packets within ~1 second
 External IPs targeted:
-- 199.232.196.209
-- 185.199.110.133
-- 20.241.44.114
+```
+199.232.196.209
+185.199.110.133
+20.241.44.114
+```
 
 ## Interpretation:
 
@@ -77,7 +81,9 @@ GET /json/ HTTP/1.1
 
 TCP stream revealed:
 
+```
 ping|STRRAT|1BE8292C|DESKTOP-SKBR25F|ccollier|Microsoft Windows 11 Pro|64-bit|Windows Defender|1.6|US:United States|Not Installed
+```
 
 Key observations:
 
@@ -113,11 +119,13 @@ File queries:
 
 ## Indicators of Compromise (IOCs)
 ### IP Addresses
-- 199.232.196.209
-- 185.199.110.133
-- 20.241.44.114
-- 141.98.10.79
-- 208.95.112.1
+```
+199.232.196.209
+185.199.110.133
+20.241.44.114
+141.98.10.79
+208.95.112.1
+```
 
 ### Domains
 - ip-api.com
@@ -164,3 +172,62 @@ Host 172.16.1.66 is confirmed to be infected with STRRAT malware, based on:
 - Block all identified IOCs at network perimeter
 - Investigate potential lateral movement
 - **Deploy EDR/SIEM detection rules** for STRRAT activity
+
+## Detection Rules (Splunk)
+
+### Detect RST Burst Behavior
+```
+index=network sourcetype=pcap
+| where tcp_flags="RST"
+| stats count by src_ip, dest_ip
+| where count > 10
+```
+
+### Detect Beaconing (Small Packets)
+```
+index=network
+| stats avg(bytes) as avg_bytes count by src_ip, dest_ip
+| where avg_bytes < 200 AND count > 50
+```
+
+### Detect ip-api Requests
+```
+index=network http_host="ip-api.com"
+| stats count by src_ip, uri
+```
+
+### Detect STRRAT Signature
+```
+index=network
+| search "STRRAT"
+```
+
+### Detect Abnormal TLS Termination
+```
+index=network
+| stats count(eval(tcp_flags="FIN")) as fin_count 
+        count(eval(tcp_flags="RST")) as rst_count 
+        by src_ip
+| where rst_count > fin_count
+```
+
+## Conclusion
+
+- Host **172.16.1.66** is confirmed **compromised**
+
+**Evidence includes:**
+
+- STRRAT beaconing traffic
+- TLS anomalies
+- RST burst patterns
+- External reconnaissance behavior
+
+### This represents an active malware infection with C2 communication
+
+## Skills Demonstrated
+- Network traffic analysis (Wireshark)
+- TCP/TLS behavior analysis
+- Malware beacon detection
+- IOC extraction
+- SOC incident reporting
+- Threat correlation
