@@ -77,8 +77,6 @@ GET /json/ HTTP/1.1
 
 ![ip-api-request](images/ip-api-request.png)
 
-![ip-api-request](images/ip-api-request2.png)
-
 ## 5. Confirmed STRRAT Beaconing
 
 TCP stream revealed:
