@@ -44,9 +44,9 @@ External IPs targeted:
 - Malware fallback connection logic
 - Abnormal termination behavior
 
-  📸 Suggested screenshot filter:
+![RST-burst](images/rst-burst.png)
 
-tcp.flags.reset == 1 && ip.addr == 172.16.1.66
+![RST-burst](images/rst-burst2.png)
 
 ## 3. No Graceful TLS Shutdown
 Expected behavior: FIN/ACK termination
@@ -56,23 +56,22 @@ Observed behavior: RST termination only
 
 ## 4. HTTP Request to Geolocation Service
 Outbound request to:
-Domain: ip-api.com
-Port: 80 (unencrypted)
+- Domain: ip-api.com
+- Port: 80 (unencrypted)
 
 Example:
 
 GET /json/ HTTP/1.1
-Host: ip-api.com
 
-Purpose:
+### Host: 
+- ip-api.com
 
-Retrieve victim geolocation
-Adapt malware behavior
-Report system metadata
+### Purpose:
+- Retrieve victim geolocation
+- Adapt malware behavior
+- Report system metadata
 
-📸 Suggested screenshot:
-
-Follow TCP stream showing HTTP GET request
+![ip-api-request](images/ip-api-request.png)
 
 ## 5. Confirmed STRRAT Beaconing
 
@@ -93,11 +92,10 @@ Key observations:
 
 ➡️ Definitive evidence of STRRAT infection and C2 beaconing
 
-📸 Suggested screenshot:
-
-TCP Stream containing STRRAT string
+![ping-host](images/ping-host.png)
 
 ## 6. SMB Activity Post-Network Event
+
 Internal SMB traffic between:
 - **172.16.1.66 ↔ 172.16.1.4**
 
