@@ -27,8 +27,8 @@ Further analysis of TCP streams revealed cleartext beaconing traffic containing 
 - Packets transmitted within milliseconds of each other
 - Indicates beaconing behavior or staged communication
 
-📸 Suggested screenshot:
 
+![TCP-connections](images/multiple-tcp-connections.png)
 Wireshark TLS traffic showing repeated small packets
 
 ## 2. Rapid RST Burst to External IPs
