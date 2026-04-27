@@ -33,6 +33,8 @@ Further analysis of TCP streams revealed cleartext beaconing traffic containing 
 ![TCP-connections](images/multiple-tcp-connections.png)
 Wireshark TLS traffic showing repeated small packets
 
+![high-volume](images/high-volume.png)
+
 ## 2. Rapid RST Burst to External IPs
 Multiple TCP RST, ACK packets within ~1 second
 External IPs targeted:
