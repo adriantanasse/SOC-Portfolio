@@ -35,6 +35,14 @@ Wireshark TLS traffic showing repeated small packets
 
 ![high-volume](images/high-volume.png)
 
+**The combination of a high packet count (455 packets) and significant data volume (~9 MB) within a short time window suggests automated communication rather than normal user browsing activity.
+**
+
+**Analysis:**
+- Indicates potential beaconing or staged data transfer
+- Not typical for simple browsing sessions
+- Consistent with malware maintaining communication with a command-and-control (C2) server
+
 ## 2. Rapid RST Burst to External IPs
 Multiple TCP RST, ACK packets within ~1 second
 External IPs targeted:
