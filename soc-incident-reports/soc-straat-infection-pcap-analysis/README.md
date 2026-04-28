@@ -1,6 +1,11 @@
 # SOC Incident Report: Suspected STRRAT Infection (PCAP Analysis/Investigation)
 ## Executive Summary
 
+Supporting Files:
+
+- SOC Analysis Report – write up (doc) –> https://docs.google.com/document/d/1GPR7hvKQ60VQgZtpYtUKSJC76qDClIca9Uws3t8wsYI/edit?usp=sharing 
+- Incident Report (doc) –> https://docs.google.com/document/d/1Ctgxyumot8JToqaIQIilk0EXxknGq1bvaKA_sjx71RE/edit?usp=sharing 
+
 On **July 30, 2024**, host **172.16.1.66** exhibited suspicious network behavior consistent with a **STRRAT** (Java-based Remote Access Trojan) **infection**.
 
 The host initiated multiple outbound TLS connections over TCP 443, followed by:
