@@ -35,10 +35,7 @@ Configured Wazuh Manager ↔ Agent secure communication
 ## Detection Engineering
 **Developed custom detection rules:**
 
-```
-5760 → SSH authentication failures
-5763 → SSH brute-force detection using:
-```
+`5760 → SSH authentication failures` and `5763 → SSH brute-force detection` using:
 
 ```
 <frequency> (attack threshold)
