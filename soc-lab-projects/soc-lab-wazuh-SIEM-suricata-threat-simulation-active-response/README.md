@@ -54,6 +54,7 @@ Implemented automated response using:
 - Timeout-based automatic unblocking
 
 **Resolved issues with:**
+
 ✓ Command compatibility (firewall-drop vs built-in scripts)
 
 ✓ Agent vs manager execution context
@@ -79,6 +80,7 @@ Simulated attacks from Kali Linux against victim machines:
 Downloaded and tested **EICAR Test File**
 
 **Verified:**
+
 ✓ Detection by security controls
 
 ✓ Alert generation within Wazuh
@@ -88,6 +90,7 @@ Downloaded and tested **EICAR Test File**
 
 ## Troubleshooting & Debugging
 **Diagnosed and fixed:**
+
 ✓ Wazuh API failures (ERROR3099 – not ready)
 
 ✓ Agent-to-manager SSL connection issues
@@ -103,6 +106,7 @@ Downloaded and tested **EICAR Test File**
 
 
 ## Key Outcomes
+
 ✓ Built a fully functional **SOC detection + response pipeline**
 
 ✓ Successfully **detected and mitigated** simulated attacks in real time
@@ -113,6 +117,7 @@ Downloaded and tested **EICAR Test File**
 
 
 ## Skills Demonstrated
+
 ✓ SIEM configuration & management (**Wazuh**)
 
 ✓ IDS integration (**Suricata**)
