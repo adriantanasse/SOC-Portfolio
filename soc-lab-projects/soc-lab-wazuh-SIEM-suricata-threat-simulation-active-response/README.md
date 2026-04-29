@@ -8,12 +8,12 @@ Designed and implemented a **multi-host SOC lab environment** to simulate real-w
 #### Wazuh Manager installed on macOS host + 3 Virtual Machines (VMs):
 
 ```
-macOS → Wazuh Manager (using Docker)
+macOS → Wazuh Manager (using UTM)
 Ubuntu → Victim system
 Windows → Victim system
 Kali Linux → Attacker machine
 ```
-
+![utm](images/utm.png)
 ![wazuh-agents](images/wazuh-agents.png)
 
 
