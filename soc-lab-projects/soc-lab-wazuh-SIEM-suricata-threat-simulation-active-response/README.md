@@ -8,11 +8,14 @@ Designed and implemented a **multi-host SOC lab environment** to simulate real-w
 #### Wazuh Manager installed on macOS host + 3 Virtual Machines (VMs):
 
 ```
-macOS → Wazuh Manager
+macOS → Wazuh Manager (using Docker)
 Ubuntu → Victim system
 Windows → Victim system
 Kali Linux → Attacker machine
 ```
+
+![wazuh-agents](images/wazuh-agents.png)
+
 
 **All VMs onboarded as agents into Wazuh.**
 **Integrated Suricata for network-based intrusion detection.**
@@ -27,6 +30,7 @@ Configured Wazuh Manager ↔ Agent secure communication
 - Custom log sources
 - Configured Suricata to feed alerts into Wazuh for correlation
 
+![suricata-logs](images/suricata-logs.png)
 
 ## Detection Engineering
 **Developed custom detection rules:**
@@ -47,11 +51,23 @@ Configured Wazuh Manager ↔ Agent secure communication
 
 ## Active Response (Automated Defense)
 Implemented automated response using:
-`firewall-drop script`
+`firewall-drop` rule
+
+```
+<active-response>
+  <command>default-firewall-drop</command>
+  <location>local</location>
+  <rules_id>5763</rules_id>
+  <timeout>180</timeout>
+</active-response>
+```
+
+![active-response](images/active-response.png)
 
 **Configured:**
 - IP blocking via iptables
 - Timeout-based automatic unblocking
+
 
 **Resolved issues with:**
 
@@ -67,14 +83,19 @@ Implemented automated response using:
 Simulated attacks from Kali Linux against victim machines:
 
 - SSH Brute Force Attack
-- Used Hydra, nmap
+- Used Hydra
 - Generated high-frequency failed login attempts
+
+![hydra-attack](images/hydra-attack.png)
 
 **Successfully triggered:**
 - Wazuh alerts
 - Correlation rule (5763)
 - Active response (attacker IP blocked)
 
+![host-blocked-1](images/host-blocked-1.png)
+![host-blocked-2](images/host-blocked-2.png)
+![drop-ip](images/drop-ip.png)
 
 ## Malware Detection Testing
 Downloaded and tested **EICAR Test File**
@@ -87,6 +108,8 @@ Downloaded and tested **EICAR Test File**
 
 ✓ Automatic removal behavior
 
+![virustotal-int](images/virustotal-int.png)
+![files-rules](images/files-rules.png)
 
 ## Troubleshooting & Debugging
 **Diagnosed and fixed:**
@@ -122,17 +145,17 @@ Downloaded and tested **EICAR Test File**
 
 ✓ IDS integration (**Suricata**)
 
-✓ Linux & Windows log analysis
+✓ Linux & Windows **log analysis**
 
-✓ Threat detection & rule creation
+✓ **Threat detection** & rule creation
 
-✓ Incident response automation
+✓ Incident response **automation**
 
-✓ Network security fundamentals
+✓ **Network security** fundamentals
 
-✓ Red team simulation (Hydra, nmap)
+✓ Red team **simulation** (Hydra, nmap)
 
-✓ Troubleshooting distributed systems
+✓ **Troubleshooting** distributed systems
 
 ## Preview
 
