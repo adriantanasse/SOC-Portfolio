@@ -1,4 +1,4 @@
-# SOC Incident Report: DDoS / Traffic Flood Detection & Response
+# SOC Lab Project: DDoS / Traffic Flood Detection & Response
 
 ## Overview
 
