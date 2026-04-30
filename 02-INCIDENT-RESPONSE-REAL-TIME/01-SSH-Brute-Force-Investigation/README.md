@@ -1,4 +1,4 @@
-# SOC Lab Project – Wazuh SIEM + Suricata + Threat Simulation + Active Response
+# SOC Hands-On Project – SSH Brute Force Detection & Response (Real-Time)
 
 ## Overview
 
