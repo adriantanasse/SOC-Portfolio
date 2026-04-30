@@ -83,11 +83,11 @@ Screenshot: Wazuh rule configuration
 
 ### Step 4 — Alert Triggering
 
-**Initial Detection:**
--> Rule 100500 triggered repeatedly
-
 Screenshot: HTTP traffic alerts
 ![wazuh-alerts](images/wazuh-alerts.png)
+
+**Initial Detection:**
+-> Rule 100500 triggered repeatedly
 
 **Correlated Detection:**
 -> Rule 100501 triggered after threshold exceeded
