@@ -4,10 +4,10 @@
 
 This lab simulates a **Denial-of-Service (DoS) attack** originating from an attacker machine and demonstrates how it was:
 
-- Detected using Suricata IDS
-- Correlated and escalated in Wazuh SIEM
+- Detected using **Suricata IDS**
+- Correlated and escalated in **Wazuh SIEM**
 - Investigated from a SOC analyst perspective
-- Automatically mitigated via active response (firewall block)
+- Automatically mitigated via **active response** (firewall block)
 
 ## Scenario
 
@@ -35,6 +35,9 @@ A DoS-like flood was generated using multiple concurrent `curl` loops:
 ```
 for i in {1..50}; do while true; do curl http://192.168.68.2:8080; done & done
 ```
+
+***Screenshot: Kali attack running `curl`*** 
+
 ![kali-attack](images/kali-attack.png)
 
 ### Step 2 — Network Detection (Suricata)
@@ -47,14 +50,16 @@ sudo tail -f /var/log/suricata/eve.json | jq 'select(.event_type=="http")'
 
 **Key Observations:**
 - **Repeated requests** from a single source IP
-- **Same destination** (`port 8080`)
+- **Same destination** (port `8080`)
 - High request frequency
+
+***Screenshot: Suricata JSON output***
 
 ![suricata-json](images/suricata-json.png)
 
 ### Step 3 — SIEM Detection (Wazuh Rules)
 
-- Rule 100500 — **HTTP Traffic Detection**
+- Rule `100500` — **HTTP Traffic Detection**
 
 ```
 <rule id="100500" level="5">
@@ -64,7 +69,7 @@ sudo tail -f /var/log/suricata/eve.json | jq 'select(.event_type=="http")'
 </rule>
 ```
 
-- Rule 100501 — **DoS Detection** (Correlation Rule)
+- Rule `100501` — **DoS Detection** (Correlation Rule)
 
 ```
 <rule id="100501" level="12" frequency="50" timeframe="10">
@@ -78,23 +83,25 @@ sudo tail -f /var/log/suricata/eve.json | jq 'select(.event_type=="http")'
 </rule>
 ```
 
-Screenshot: Wazuh rule configuration
+***Screenshot: Wazuh rule configuration***
+
 ![wazuh-rules.png](images/wazuh-rules.png)
 
 ### Step 4 — Alert Triggering
 
-Screenshot: HTTP traffic alerts
+***Screenshot: HTTP traffic alerts***
+
 ![wazuh-alerts](images/wazuh-alerts.png)
 
 **Initial Detection:**
--> Rule 100500 triggered repeatedly
+-> Rule `100500` triggered repeatedly
 
 **Correlated Detection:**
--> Rule 100501 triggered after threshold exceeded
+-> Rule `100501` triggered after threshold exceeded
 
-Since Wazuh was deployed in a containerized environment on macOS, log files such as alerts.log were accessed directly from the Wazuh manager container rather than the host filesystem.
+***Since Wazuh was deployed in a containerized environment on macOS, log files such as alerts.log were accessed directly from the Wazuh manager container rather than the host filesystem.***
 
-Initial detection tuning failed due to an overly strict correlation threshold. After adjusting frequency and timeframe, the rule successfully identified abnormal traffic patterns.
+***Initial detection tuning failed due to an overly strict correlation threshold. After adjusting frequency and timeframe, the rule successfully identified abnormal traffic patterns.***
 
 Screenshot: Rule triggered in logs
 ![rule-triggered-log](images/rule-triggered-log.png)
@@ -116,14 +123,15 @@ This behavior indicates:
 - Resource exhaustion attempt
 - Pattern consistent with **DoS** (`MITRE T1498`)
 
-To validate the alert at the host level, I inspected active TCP connections using netstat, confirming a high volume of short-lived connections from a single source IP consistent with DoS behavior.
+***To validate the alert at the host level, I inspected active TCP connections using netstat, confirming a high volume of short-lived connections from a single source IP consistent with DoS behavior.***
 
 ```
 netstat -an | grep :8080
 ```
 **Evidence Network Connections**
 
-Screenshot: Multiple TCP connections from attacker (TIME_WAIT state)
+***Screenshot: Multiple TCP connections from attacker (TIME_WAIT state)***
+
 ![netstat](images/netstat.png)
 
 The netstat output reveals:
@@ -143,7 +151,8 @@ The netstat output reveals:
 </active-response>
 ```
 
-Screenshot: Active response config
+***Screenshot: Active response config***
+
 ![active-response](images/active-response.png)
 
 ### Step 7 — Mitigation Verification
@@ -156,7 +165,8 @@ iptables -L -n -v
 **Result:**
 - Attacker IP added to DROP rules
 
-Screenshot: iptables drop rule
+***Screenshot: iptables drop rule***
+
 ![iptables-drop-ip](images/iptables-drop-ip.png)
 
 ### Step 8 — Attack Block Confirmation
@@ -167,20 +177,22 @@ curl http://192.168.68.2:8080 -v
 **Result:**
 - Connection fails
 
-Screenshot: attacker connection fails
+***Screenshot: attacker connection fails***
+
 ![connection-fails](images/connection-fails.png)
 
 ### Step 9 — SIEM Confirmation of Response
 Wazuh logs confirm automated response execution:
 
-Screenshot: Host blocked alerts
+***Screenshot: Host blocked alerts***
+
 ![host-blocked](images/host-blocked.png)
 ![host-blocked-2](images/host-blocked-2.png)
 
 
 #### Challenges I Encountered & Troubleshooting
 
-**Issue 1 — Rule 100501 Not Triggering**
+**Issue 1 — Rule `100501` Not Triggering**
 - Cause: Threshold too low
 - Fix: Increased frequency and adjusted timeframe
 ---
@@ -196,13 +208,14 @@ Screenshot: Host blocked alerts
   
 **Workaround:**
 -Manual validation using:
+
 ```
 iptables -I INPUT -s <IP> -j DROP
 ```
 
 ### SOC Analyst Takeaways
 
-This lab demonstrates:
+**This lab demonstrates:**
 
 **1. Detection Engineering**
 - Building layered detection (raw → correlated alerts)
