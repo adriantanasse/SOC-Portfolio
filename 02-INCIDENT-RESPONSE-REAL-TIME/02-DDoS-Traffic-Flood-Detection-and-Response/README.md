@@ -11,13 +11,13 @@ This lab simulates a **Denial-of-Service (DoS) attack** originating from an atta
 
 ## Scenario
 
-An attacker machine (Kali Linux) generates **high-frequency HTTP request**s against a web server (Ubuntu).
+An attacker machine (Kali Linux) generates **high-frequency HTTP requests** against a web server (Ubuntu).
 
 **Goal:**
 
 - **Identify** abnormal traffic patterns
 - **Detect** attack behavior via rule correlation
-- Automatically **block** the attacker
+- **Automatically block** the attacker
 
 ## Lab Architecture
 
