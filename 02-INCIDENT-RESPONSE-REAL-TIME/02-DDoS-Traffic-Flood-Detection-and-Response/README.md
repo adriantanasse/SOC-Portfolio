@@ -230,3 +230,6 @@ iptables -I INPUT -s <IP> -j DROP
 **4. Troubleshooting Skills**
 - ✅ Debugging SIEM pipelines
 - ✅ Validating firewall enforcement
+
+### Author
+**Adrian Tanase** / SOC Analyst Portfolio Project
