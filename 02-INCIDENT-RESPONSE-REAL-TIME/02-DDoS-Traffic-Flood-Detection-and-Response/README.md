@@ -105,10 +105,12 @@ sudo tail -f /var/log/suricata/eve.json | jq 'select(.event_type=="http")'
 
 ***Initial detection tuning failed due to an overly strict correlation threshold. After adjusting frequency and timeframe, the rule successfully identified abnormal traffic patterns.***
 
-Screenshot: Rule triggered in logs
+***Screenshot: Rule triggered in logs***
+
 ![rule-triggered-log](images/rule-triggered-log.png)
 
-Screenshot: Wazuh dashboard alerts
+***Screenshot: Wazuh dashboard alerts***
+
 ![rule-triggered-wazuh](images/rule-triggered-wazuh.png)
 
 ### 🔹 Step 5 — Investigation (SOC Analysis)
