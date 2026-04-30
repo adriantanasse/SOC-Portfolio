@@ -4,10 +4,11 @@
 
 This lab simulates a **Denial-of-Service (DoS) attack** originating from an attacker machine and demonstrates how it was:
 
-- Detected using **Suricata IDS**
-- Correlated and escalated in **Wazuh SIEM**
-- Investigated from a SOC analyst perspective
-- Automatically mitigated via **active response** (firewall block)
+- 🔍 Detect malicious traffic using **Suricata IDS**
+- 📊 Correlate events in **Wazuh SIEM**
+- 🧠 **Investigate** the incident like a SOC analyst
+- 🛡️ Automatically block the attacker via **active response**
+- 📄 **Document** the incident professionally
 
 ## Scenario
 
@@ -21,13 +22,14 @@ An attacker machine (Kali Linux) generates **high-frequency HTTP requests** agai
 
 ## Lab Architecture
 
-- Attacker: **Kali Linux** (`192.168.67.2`)
-- Target: **Ubuntu Server** (`192.168.68.2:8080`)
+| Component     | Role            | IP                      |
+| ------------- | --------------- | ----------------------- |
+| Kali Linux    | Attacker        | `192.168.67.2`          |
+| Ubuntu Server | Target          | `192.168.68.2`          |
+| Suricata      | Network IDS     | Monitoring HTTP traffic |
+| Wazuh         | SIEM + Response | Detection & blocking    |
 
-**Detection Stack:**
 
-- Suricata (network IDS)
-- Wazuh (SIEM + response)
 
 ### 🔹 Step 1 — Attack Simulation
 
@@ -94,10 +96,10 @@ sudo tail -f /var/log/suricata/eve.json | jq 'select(.event_type=="http")'
 ![wazuh-alerts](images/wazuh-alerts.png)
 
 **Initial Detection:**
--> Rule `100500` triggered repeatedly
+-> ✅ Rule `100500` triggered repeatedly
 
 **Correlated Detection:**
--> Rule `100501` triggered after threshold exceeded
+-> ✅ Rule `100501` triggered after threshold exceeded
 
 ***Since Wazuh was deployed in a containerized environment on macOS, log files such as alerts.log were accessed directly from the Wazuh manager container rather than the host filesystem.***
 
@@ -163,7 +165,7 @@ iptables -L -n -v
 ```
 
 **Result:**
-- Attacker IP added to DROP rules
+- ✅ Attacker IP added to DROP rules
 
 ***Screenshot: iptables drop rule***
 
@@ -192,22 +194,22 @@ Wazuh logs confirm automated response execution:
 
 #### Challenges I Encountered & Troubleshooting
 
-**Issue 1 — Rule `100501` Not Triggering**
+**Issue 1 — ❌ Rule `100501` Not Triggering**
 - Cause: Threshold too low
-- Fix: Increased frequency and adjusted timeframe
+- ✅ Fix: Increased frequency and adjusted timeframe
 ---
-**Issue 2 — Active Response Not Triggering**
+**Issue 2 — ❌ Active Response Not Triggering**
 - Cause: Misconfiguration in rules_id
-- Fix: Correct rule ID mapping
+- ✅ Fix: Correct rule ID mapping
 ---
-**Issue 3 — Firewall Script Not Working**
+**Issue 3 — ❌ Firewall Script Not Working**
 - default-firewall-drop failed to add iptables rule
 
 **Root Cause:**
 - Script execution issue / environment mismatch
   
 **Workaround:**
--Manual validation using:
+- Manual validation using:
 
 ```
 iptables -I INPUT -s <IP> -j DROP
@@ -218,11 +220,11 @@ iptables -I INPUT -s <IP> -j DROP
 **This lab demonstrates:**
 
 **1. Detection Engineering**
-- Building layered detection (raw → correlated alerts)
+- ✅ Building layered detection (raw → correlated alerts)
 **2. Threat Analysis**
-- Identifying abnormal patterns vs normal traffic
+- ✅ Identifying abnormal patterns vs normal traffic
 **3. Response Automation**
-- Linking detection → action (SOAR-like behavior)
+- ✅ Linking detection → action (SOAR-like behavior)
 **4. Troubleshooting Skills**
-- Debugging SIEM pipelines
-- Validating firewall enforcement
+- ✅ Debugging SIEM pipelines
+- ✅ Validating firewall enforcement
