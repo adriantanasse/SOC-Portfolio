@@ -92,6 +92,10 @@ Screenshot: HTTP traffic alerts
 **Correlated Detection:**
 -> Rule 100501 triggered after threshold exceeded
 
+Since Wazuh was deployed in a containerized environment on macOS, log files such as alerts.log were accessed directly from the Wazuh manager container rather than the host filesystem.
+
+Initial detection tuning failed due to an overly strict correlation threshold. After adjusting frequency and timeframe, the rule successfully identified abnormal traffic patterns.
+
 Screenshot: Rule triggered in logs
 ![rule-triggered-log](images/rule-triggered-log.png)
 
@@ -111,6 +115,22 @@ This behavior indicates:
 - Automated traffic (non-human)
 - Resource exhaustion attempt
 - Pattern consistent with **DoS** (`MITRE T1498`)
+
+To validate the alert at the host level, I inspected active TCP connections using netstat, confirming a high volume of short-lived connections from a single source IP consistent with DoS behavior.
+
+```
+netstat -an | grep :8080
+```
+**Evidence Network Connections**
+
+Screenshot: Multiple TCP connections from attacker (TIME_WAIT state)
+![netstat](images/netstat.png)
+
+The netstat output reveals:
+
+- A large number of TCP connections targeting port `8080`
+- All connections originate from `192.168.67.2` (attacker)
+- Many sockets in **TIME_WAIT** state => Rapid connection creation and teardown - Typical behavior of HTTP flood / DoS attack
 
 ### Step 6 — Active Response (Automated Blocking)
 **Configuration:**
@@ -180,3 +200,16 @@ Screenshot: Host blocked alerts
 iptables -I INPUT -s <IP> -j DROP
 ```
 
+### SOC Analyst Takeaways
+
+This lab demonstrates:
+
+**1. Detection Engineering**
+- Building layered detection (raw → correlated alerts)
+**2. Threat Analysis**
+- Identifying abnormal patterns vs normal traffic
+**3. Response Automation**
+- Linking detection → action (SOAR-like behavior)
+**4. Troubleshooting Skills**
+- Debugging SIEM pipelines
+- Validating firewall enforcement
