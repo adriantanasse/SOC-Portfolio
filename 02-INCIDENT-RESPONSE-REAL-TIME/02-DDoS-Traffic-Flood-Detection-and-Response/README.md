@@ -29,7 +29,7 @@ An attacker machine (Kali Linux) generates **high-frequency HTTP request**s agai
 - Suricata (network IDS)
 - Wazuh (SIEM + response)
 
-### Step 1 — Attack Simulation
+### 🔹 Step 1 — Attack Simulation
 
 A DoS-like flood was generated using multiple concurrent `curl` loops:
 ```
@@ -40,7 +40,7 @@ for i in {1..50}; do while true; do curl http://192.168.68.2:8080; done & done
 
 ![kali-attack](images/kali-attack.png)
 
-### Step 2 — Network Detection (Suricata)
+### 🔹 Step 2 — Network Detection (Suricata)
 
 Suricata captured HTTP traffic in real-time:
 
@@ -57,7 +57,7 @@ sudo tail -f /var/log/suricata/eve.json | jq 'select(.event_type=="http")'
 
 ![suricata-json](images/suricata-json.png)
 
-### Step 3 — SIEM Detection (Wazuh Rules)
+### 🔹 Step 3 — SIEM Detection (Wazuh Rules)
 
 - Rule `100500` — **HTTP Traffic Detection**
 
@@ -87,7 +87,7 @@ sudo tail -f /var/log/suricata/eve.json | jq 'select(.event_type=="http")'
 
 ![wazuh-rules.png](images/wazuh-rules.png)
 
-### Step 4 — Alert Triggering
+### 🔹 Step 4 — Alert Triggering
 
 ***Screenshot: HTTP traffic alerts***
 
@@ -109,7 +109,7 @@ Screenshot: Rule triggered in logs
 Screenshot: Wazuh dashboard alerts
 ![rule-triggered-wazuh](images/rule-triggered-wazuh.png)
 
-### Step 5 — Investigation (SOC Analysis)
+### 🔹 Step 5 — Investigation (SOC Analysis)
 **Indicators of Compromise (IoCs):**
 - Source IP: `192.168.67.2`
 - High request frequency
@@ -140,7 +140,7 @@ The netstat output reveals:
 - All connections originate from `192.168.67.2` (attacker)
 - Many sockets in **TIME_WAIT** state => Rapid connection creation and teardown - Typical behavior of HTTP flood / DoS attack
 
-### Step 6 — Active Response (Automated Blocking)
+### 🔹 Step 6 — Active Response (Automated Blocking)
 **Configuration:**
 ```
 <active-response>
@@ -155,7 +155,7 @@ The netstat output reveals:
 
 ![active-response](images/active-response.png)
 
-### Step 7 — Mitigation Verification
+### 🔹 Step 7 — Mitigation Verification
 **Firewall Rule Applied (Active Response):**
 
 ```
@@ -169,7 +169,7 @@ iptables -L -n -v
 
 ![iptables-drop-ip](images/iptables-drop-ip.png)
 
-### Step 8 — Attack Block Confirmation
+### 🔹 Step 8 — Attack Block Confirmation
 From attacker machine:
 ```
 curl http://192.168.68.2:8080 -v
@@ -181,7 +181,7 @@ curl http://192.168.68.2:8080 -v
 
 ![connection-fails](images/connection-fails.png)
 
-### Step 9 — SIEM Confirmation of Response
+### 🔹 Step 9 — SIEM Confirmation of Response
 Wazuh logs confirm automated response execution:
 
 ***Screenshot: Host blocked alerts***
