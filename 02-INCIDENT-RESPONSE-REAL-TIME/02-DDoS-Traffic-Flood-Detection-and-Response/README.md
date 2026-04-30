@@ -1,4 +1,4 @@
-# SOC Lab Project: DDoS / Traffic Flood Detection & Response
+# SOC Hands-On Project: DDoS / Traffic Flood Detection & Response
 
 ## Overview
 
