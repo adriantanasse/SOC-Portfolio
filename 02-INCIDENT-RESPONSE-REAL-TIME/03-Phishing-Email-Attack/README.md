@@ -2,20 +2,22 @@
 
 ## 📌 Overview
 
-This report documents the detection and investigation of a phishing attack simulated using the Social-Engineer Toolkit (SET), where an attacker successfully harvested user credentials via a fake login portal.
+This project simulates a **real-world Security Operations Center (SOC) investigation**, demonstrating **detection** engineering, **threat analysis**, and **incident response** in the context of a **phishing attack**. The attack was conducted using the Social-Engineer Toolkit (SET), where a malicious actor successfully harvested user credentials through a spoofed login portal.
 
-- A phishing page created with Social-Engineer Toolkit
-- A Python-based credential harvesting server
-- Custom Wazuh rules (behavior-based detection)
-- Network monitoring via Suricata
+The lab environment integrates **multiple security tools and techniques**, including:
 
-The goal is to move beyond signature-based detection and identify attacker behavior patterns.
+- A phishing page generated with the **Social-Engineer Toolkit (SET)**
+- A **Python-based credential harvesting server** used by the attacker
+- **Custom Wazuh detection rules** focused on behavior-based threat identification
+- Network monitoring and alerting **powered by Suricata**
+
+Rather than relying solely on signature-based detection, this project emphasizes the identification of attacker behavior patterns, such as suspicious HTTP activity, credential submission events, and abnormal server responses, to improve detection accuracy and incident visibility.
 
 ## Attack Scenario
-1. A victim accesses a fake Nassau County login page
-2. The attacker runs a Python HTTP server to collect credentials
-3. Victim submits login details
-4. Credentials are stored in an XML file
+1. A victim accesses a **fake Nassau County login page**
+2. The attacker runs a **Python HTTP server** to **collect** credentials
+3. Victim **submits** login details
+4. Credentials are stored in an **XML file**
 5. Wazuh detects:
     - Suspicious Python HTTP server
     - Credential submission via POST requests
@@ -119,14 +121,18 @@ Wazuh generates alerts based on behavior:
 
 ![Wazuh Alerts Detailed](images/wazuh-alerts-2.png)
 
-### Step 6: Network Evidence
+
+## Indicators of Compromise (IOCs)
 
 Wazuh + Suricata logs reveal:
 
 - Attacker IP: `192.168.69.2`
 - Port: `80`
-- Traffic type: `HTTP`
-- Server type: `Python BaseHTTP (SET)`
+- Protocol: `HTTP`
+- Signature/Server type: `Python BaseHTTP (SET)`
+- Behavior:
+    - Multiple POST requests
+    - Credential submission patterns
 
 ***This confirms the phishing infrastructure.***
 
@@ -138,4 +144,25 @@ Wazuh + Suricata logs reveal:
 | Credential submission | HTTP POST          |
 | Attack confirmation   | Rule correlation   |
 
+## Response Actions
+- Identified malicious server IP
+- Confirmed credential compromise
+- Correlated alerts to validate attack
+- Simulated containment within lab
 
+## Recommendations
+**Detection Improvements**
+Expand rules for:
+- Suspicious web servers
+- Credential harvesting patterns
+- Add geo/IP anomaly detection
+
+**Prevention**
+- Enforce HTTPS-only policies
+- Implement phishing awareness training
+- Deploy email filtering & sandboxing
+
+**Monitoring**
+Alert on:
+- High POST request frequency
+- Unknown web servers in internal network
