@@ -1,4 +1,4 @@
-# Phishing Detection Lab with Wazuh (Behavior-Based Detection)
+# SOC Hands-On Project: Phishing Detection Lab with Wazuh (Behavior-Based Detection)
 
 ## 📌 Overview
 
