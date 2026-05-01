@@ -1,4 +1,4 @@
-## SOC Analyst Portfolio – Detection, Investigation & Threat Analysis
+## SOC Portfolio | Detection, Investigation & Threat Analysis
 
 ### 📌 Overview
 
